@@ -165,6 +165,7 @@ Archie file Send&Receive/
 | **`/stop`** | Abort stuck tool executions, active generation, or background loops |
 | **`/last`** | Retrieve the latest completed assistant output from transcript history |
 | **`/lang`** | Toggle bot language instantly between Persian (`fa`) and English (`en`) |
+| **`/about`** | View developer credits, contributors, and GitHub repository links |
 | **`/ping`** | Measure real-time server latency and Telegram API round-trip delay |
 
 ---
@@ -193,11 +194,14 @@ Archie file Send&Receive/
 
 ---
 
-## 👨‍💻 Author & Maintainer
+## 👨‍💻 Developers & Maintainers
 
-Developed with ❤️ by **Aliz ([@Alizjahan](https://github.com/Alizjahan))**
-- GitHub: [@Alizjahan](https://github.com/Alizjahan)
-- Telegram: [@Alizjahan](https://t.me/Alizjahan)
+Developed with ❤️ by:
+- **Aliz ([@Alizjahan](https://github.com/Alizjahan))**
+  - GitHub: [@Alizjahan](https://github.com/Alizjahan)
+  - Telegram: [@Alizjahan](https://t.me/Alizjahan)
+- **Ehsan Shahbazi ([@EhsanShahbazii](https://github.com/EhsanShahbazii))**
+  - GitHub: [@EhsanShahbazii](https://github.com/EhsanShahbazii)
 
 ---
 

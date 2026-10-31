@@ -37,6 +37,16 @@
     "remote-control"
   ],
   "author": "Alireza Jahanbakhsh",
+  "contributors": [
+    {
+      "name": "Alireza Jahanbakhsh (Aliz)",
+      "url": "https://github.com/Alizjahan"
+    },
+    {
+      "name": "Ehsan Shahbazi",
+      "url": "https://github.com/EhsanShahbazii"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "@types/node-cron": "^3.0.11",

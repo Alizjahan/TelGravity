@@ -163,7 +163,8 @@ export const startBot = async () => {
             .text(isFa ? '⏹ لغو ران / توقف' : '⏹ Stop Task', 'stop_task').row()
             .text(isFa ? '📸 اسکرین‌شات از آنتی‌گرویتی' : '📸 Screenshot of Antigravity', 'menu_screenshot')
             .text(isFa ? '🌐 تغییر زبان' : '🌐 Language', 'menu_lang').row()
-            .text(isFa ? '📖 راهنمای کامل دستورات' : '📖 User Guide & Help', 'menu_help');
+            .text(isFa ? '📖 راهنمای کامل دستورات' : '📖 User Guide & Help', 'menu_help')
+            .url(isFa ? '⭐ گیت‌هاب پروژه (GitHub)' : '⭐ Project GitHub', 'https://github.com/Alizjahan/TelGravity');
 
         const activeProject = userSelectedProject.get(userId) || '5-  Anti_Telegram';
         const activeChatTitle = userActiveConvoTitle.get(userId) || (isFa ? 'گفتگوی فعال' : 'Active Conversation');
@@ -189,7 +190,9 @@ export const startBot = async () => {
             `\u200F• تصویربرداری زنده از پنجره برنامه با دستور /screenshot\n` +
             `\u200F• راهنمای کامل دستورات با ارسال دستور /help\n` +
             `\u200F• تغییر زبان کاری در هر زمان با دستور /lang\n` +
-            `\u200F• دریافت خودکار اعلان و نتیجه کامل پس از پایان کار`;
+            `\u200F• دریافت خودکار اعلان و نتیجه کامل پس از پایان کار\n\n` +
+            `\u200F👨‍💻 <b>توسعه‌یافته با ❤️ توسط:</b> <a href="https://github.com/Alizjahan">Aliz</a> &amp; <a href="https://github.com/EhsanShahbazii">Ehsan</a>\n` +
+            `\u200F📦 <b>سورس پروژه در گیت‌هاب:</b> <a href="https://github.com/Alizjahan/TelGravity">GitHub: Alizjahan/TelGravity</a>`;
 
         const textEn = `👋 <b>TelGravity (Telegram Remote Controller for Antigravity) is Ready.</b>\n\n` +
             `🎯 <b>Connection Status:</b>\n` +
@@ -204,7 +207,9 @@ export const startBot = async () => {
             `• Capture live Antigravity window screenshots via /screenshot\n` +
             `• View complete user guide anytime with /help\n` +
             `• Switch language anytime with /lang or the 🌐 Language button\n` +
-            `• Receive full notification updates once processing completes`;
+            `• Receive full notification updates once processing completes\n\n` +
+            `👨‍💻 <b>Developed with ❤️ by:</b> <a href="https://github.com/Alizjahan">Aliz</a> &amp; <a href="https://github.com/EhsanShahbazii">Ehsan</a>\n` +
+            `📦 <b>Repository:</b> <a href="https://github.com/Alizjahan/TelGravity">GitHub: Alizjahan/TelGravity</a>`;
 
         await replyHtml(ctx, isFa ? textFa : textEn, keyboard);
     });
@@ -272,7 +277,8 @@ export const startBot = async () => {
         const kb = new InlineKeyboard()
             .text(isFa ? '📁 انتخاب پروژه' : '📁 Select Project', 'menu_projects')
             .text(isFa ? '📸 اسکرین‌شات' : '📸 Screenshot', 'menu_screenshot').row()
-            .text(isFa ? '🌐 تغییر زبان (Language)' : '🌐 Language', 'menu_lang');
+            .text(isFa ? '🌐 تغییر زبان (Language)' : '🌐 Language', 'menu_lang')
+            .url(isFa ? '⭐ گیت‌هاب پروژه' : '⭐ GitHub Repo', 'https://github.com/Alizjahan/TelGravity');
 
         const textFa = `\u200F📖 <b>راهنمای کامل ربات تلگرام TelGravity (Telegram Remote Controller for Antigravity)</b>\n\n` +
             `\u200F🎯 <b>درباره این سیستم:</b>\n` +
@@ -287,12 +293,16 @@ export const startBot = async () => {
             `\u200F• دستور /screenshot : تصویربرداری زنده و باکیفیت از پنجره برنامه\n` +
             `\u200F• دستور /last : بازخوانی آخرین خروجی ثبت‌شده دستیار\n` +
             `\u200F• دستور /lang : تغییر زبان کاری ربات بین فارسی و انگلیسی\n` +
+            `\u200F• دستور /about : اطلاعات توسعه‌دهندگان و لینک‌های گیت‌هاب\n` +
             `\u200F• دستور /ping : سنجش زمان تاخیر و سرعت ارتباط با سرور\n\n` +
             `\u200F🚀 <b>روش‌های تعامل و ارسال فایل:</b>\n` +
             `\u200F• پیام متنی: پیام شما مستقیم در پنجره برنامه درج شده و پس از اتمام پردازش، نتیجه کامل ارسال می‌شود.\n` +
             `\u200F• پیام صوتی: با ضبط صدا صحبت کنید تا به طور خودکار دریافت و اجرا شود.\n` +
             `\u200F• ارسال تصویر: تصاویر کد یا طراحی را همراه با توضیحات بفرستید تا بررسی شوند.\n` +
-            `\u200F• آرشیو فایل‌ها: تمامی فایل‌های ارسالی و دریافتی در پوشه آرشیو پروژه در کامپیوتر ذخیره می‌گردند.`;
+            `\u200F• آرشیو فایل‌ها: تمامی فایل‌های ارسالی و دریافتی در پوشه آرشیو پروژه در کامپیوتر ذخیره می‌گردند.\n\n` +
+            `\u200F⭐️ <b>تیم توسعه‌دهندگان:</b>\n` +
+            `\u200F• توسعه‌یافته با ❤️ توسط <a href="https://github.com/Alizjahan">Aliz</a> و <a href="https://github.com/EhsanShahbazii">Ehsan</a>\n` +
+            `\u200F• مخزن رسمی گیت‌هاب: <a href="https://github.com/Alizjahan/TelGravity">Alizjahan/TelGravity</a>`;
 
         const textEn = `📖 <b>TelGravity (Telegram Remote Controller for Antigravity) — Complete User Guide</b>\n\n` +
             `🎯 <b>Overview:</b>\n` +
@@ -307,12 +317,16 @@ export const startBot = async () => {
             `• <code>/screenshot</code> : Capture a crystal-clear screenshot of Antigravity\n` +
             `• <code>/last</code> : Retrieve the latest completed assistant response\n` +
             `• <code>/lang</code> : Switch bot language (English / Persian)\n` +
+            `• <code>/about</code> : Developer credits and GitHub repository info\n` +
             `• <code>/ping</code> : Test connection latency and response time\n\n` +
             `🚀 <b>Interactive Capabilities:</b>\n` +
             `• <b>Text Messages:</b> Send instructions directly to the Antigravity prompt; output is delivered upon completion.\n` +
             `• <b>Voice Notes:</b> Send voice messages to prompt the assistant naturally.\n` +
             `• <b>Photos & Diagrams:</b> Send screenshots or diagrams with optional captions.\n` +
-            `• <b>File Archiving:</b> All exchanged media is preserved in <code>Archie file Send&Receive</code>.`;
+            `• <b>File Archiving:</b> All exchanged media is preserved in <code>Archie file Send&Receive</code>.\n\n` +
+            `⭐️ <b>Developers & Repository:</b>\n` +
+            `• Developed with ❤️ by <a href="https://github.com/Alizjahan">Aliz</a> &amp; <a href="https://github.com/EhsanShahbazii">Ehsan</a>\n` +
+            `• GitHub Repository: <a href="https://github.com/Alizjahan/TelGravity">Alizjahan/TelGravity</a>`;
 
         return { text: isFa ? textFa : textEn, keyboard: kb };
     };
@@ -322,6 +336,33 @@ export const startBot = async () => {
         const userId = String(ctx.from?.id ?? '');
         const res = renderHelpMessage(userId);
         await replyHtml(ctx, res.text, res.keyboard);
+    });
+
+    // /about and /devs command
+    bot.command(['about', 'devs', 'developer', 'developers'], async (ctx) => {
+        const userId = String(ctx.from?.id ?? '');
+        const isFa = getUserLang(userId) === 'fa';
+
+        const kb = new InlineKeyboard()
+            .url('Aliz (GitHub)', 'https://github.com/Alizjahan')
+            .url('Ehsan (GitHub)', 'https://github.com/EhsanShahbazii').row()
+            .url(isFa ? '⭐ مخزن رسمی گیت‌هاب پروژه' : '⭐ Official GitHub Repository', 'https://github.com/Alizjahan/TelGravity');
+
+        const msgFa = `\u200F🚀 <b>پروژه TelGravity (Telegram Remote Controller for Antigravity)</b>\n\n` +
+            `\u200F❤️ <b>تیم توسعه‌دهندگان:</b>\n` +
+            `\u200F• علیرضا جهانبخش: <a href="https://github.com/Alizjahan">@Alizjahan</a>\n` +
+            `\u200F• احسان شهبازی: <a href="https://github.com/EhsanShahbazii">@EhsanShahbazii</a>\n\n` +
+            `\u200F📦 <b>آدرس مخزن سورس‌کد در گیت‌هاب:</b>\n` +
+            `\u200F<a href="https://github.com/Alizjahan/TelGravity">https://github.com/Alizjahan/TelGravity</a>`;
+
+        const msgEn = `🚀 <b>TelGravity (Telegram Remote Controller for Antigravity)</b>\n\n` +
+            `❤️ <b>Developed with love by:</b>\n` +
+            `• Aliz: <a href="https://github.com/Alizjahan">@Alizjahan</a>\n` +
+            `• Ehsan Shahbazi: <a href="https://github.com/EhsanShahbazii">@EhsanShahbazii</a>\n\n` +
+            `📦 <b>Official GitHub Repository:</b>\n` +
+            `<a href="https://github.com/Alizjahan/TelGravity">https://github.com/Alizjahan/TelGravity</a>`;
+
+        await replyHtml(ctx, isFa ? msgFa : msgEn, kb);
     });
 
     // /lang command

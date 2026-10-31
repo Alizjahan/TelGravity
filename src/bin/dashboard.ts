@@ -654,7 +654,8 @@ export function startWebDashboard(port: number = 3888) {
                 confirmInstall: 'آیا از نصب پیش‌نیازها و کامپایل اطمینان دارید؟',
                 alertInstallStarted: 'فرآیند نصب آغاز شد؛ خروجی را در ترمینال پایین دنبال کنید.',
                 alertSkillInstalled: '✅ اسکیل راست‌چین تلگرام (persian-rtl-formatter) با موفقیت در پوشه مهارت‌های Antigravity نصب شد!',
-                alertSkillError: 'خطا در نصب اسکیل: '
+                alertSkillError: 'خطا در نصب اسکیل: ',
+                footerDevelopedBy: 'توسعه یافته توسط ❤️ <a href="https://github.com/Alizjahan" target="_blank" rel="noopener noreferrer">Aliz</a> &amp; <a href="https://github.com/EhsanShahbazii" target="_blank" rel="noopener noreferrer">Ehsan</a>'
             },
             en: {
                 brandSubtitle: 'Intelligent control & monitoring of Antigravity assistant via Telegram',
@@ -947,7 +948,8 @@ export function startWebDashboard(port: number = 3888) {
                 confirmInstall: 'Are you sure you want to install dependencies and recompile?',
                 alertInstallStarted: 'Dependency installation started; track output in the console below.',
                 alertSkillInstalled: '✅ Telegram RTL skill (persian-rtl-formatter) was successfully installed in Antigravity skills directory!',
-                alertSkillError: 'Error installing skill: '
+                alertSkillError: 'Error installing skill: ',
+                footerDevelopedBy: 'Developed with ❤️ by <a href="https://github.com/Alizjahan" target="_blank" rel="noopener noreferrer">Aliz</a> &amp; <a href="https://github.com/EhsanShahbazii" target="_blank" rel="noopener noreferrer">Ehsan</a>'
             }
         };
 
@@ -1568,6 +1570,30 @@ export function startWebDashboard(port: number = 3888) {
             display: flex;
             justify-content: flex-end;
             gap: 12px;
+        }
+
+        .app-footer {
+            margin-top: 36px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-size: 14.5px;
+            color: #94a3b8;
+            padding: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .app-footer a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.2s, text-decoration 0.2s;
+        }
+        .app-footer a:hover {
+            color: #7dd3fc;
+            text-decoration: underline;
         }
 
         /* Status Badge with Live Glow */
@@ -2541,6 +2567,11 @@ export function startWebDashboard(port: number = 3888) {
                 <div id="logsBody" class="terminal-body" data-i18n="logsLoading">در حال بارگذاری لاگ‌ها...</div>
             </div>
         </div>
+
+        <!-- App Footer with Clickable GitHub Profiles -->
+        <footer class="app-footer">
+            <span data-i18n="footerDevelopedBy">توسعه یافته توسط ❤️ <a href="https://github.com/Alizjahan" target="_blank" rel="noopener noreferrer">Aliz</a> &amp; <a href="https://github.com/EhsanShahbazii" target="_blank" rel="noopener noreferrer">Ehsan</a></span>
+        </footer>
 
     </div>
 

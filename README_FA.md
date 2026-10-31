@@ -164,15 +164,19 @@ Archie file Send&Receive/
 | **`/stop`** | توقف آنی پردازش جاری و لغو دستورات معلق مدل |
 | **`/last`** | بازیابی و ارسال مجدد آخرین پاسخ دستیار از حافظه سیستم |
 | **`/lang`** | تغییر آنی زبان کاری ربات میان فارسی و انگلیسی |
+| **`/about`** | نمایش اطلاعات سازندگان، مشارکت‌کنندگان و مخزن گیت‌هاب |
 | **`/ping`** | آزمایش سرعت پاسخ‌دهی و تاخیر شبکه سرور |
 
 ---
 
-## 👨‍💻 توسعه‌دهنده
+## 👨‍💻 تیم توسعه‌دهندگان
 
-توسعه‌یافته با ❤️ توسط **Aliz ([@Alizjahan](https://github.com/Alizjahan))**
-- گیت‌هاب: [https://github.com/Alizjahan](https://github.com/Alizjahan)
-- تلگرام: [https://t.me/Alizjahan](https://t.me/Alizjahan)
+توسعه‌یافته با ❤️ توسط:
+- **علیرضا جهانبخش ([@Alizjahan](https://github.com/Alizjahan))**
+  - صفحه گیت‌هاب: [https://github.com/Alizjahan](https://github.com/Alizjahan)
+  - ارتباط تلگرام: [https://t.me/Alizjahan](https://t.me/Alizjahan)
+- **احسان شهبازی ([@EhsanShahbazii](https://github.com/EhsanShahbazii))**
+  - صفحه گیت‌هاب: [https://github.com/EhsanShahbazii](https://github.com/EhsanShahbazii)
 
 ---
 
