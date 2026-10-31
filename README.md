@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/header.jpg" alt="TelGravity Banner" width="100%">
+  <img src="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/header.jpg" alt="TelGravity Banner" width="100%">
 </p>
 
 <div align="center">
@@ -58,38 +58,97 @@ Whether you are away from your workstation, commuting, or simply monitoring long
 
 ---
 
-## ⚡ Quick Start & Installation
+## 🚀 Step-by-Step Setup & Management Guide
 
-### Option 1: Desktop Launcher (Windows)
+TelGravity comes with an interactive graphical Web Dashboard (`http://127.0.0.1:3888`) designed for rapid zero-friction setup in 5 simple steps:
 
-Simply double-click **`run_bot.bat`**.  
-The interactive web dashboard will automatically open at `http://127.0.0.1:3888`, allowing you to enter your bot token, start the service, and begin interacting immediately.
+### Step 0: Initial System Prerequisites
 
-### Option 2: Command Line (CLI)
+Before connecting and launching the bot, make sure to initialize and install the two essential prerequisites:
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Alizjahan/TelGravity.git
-   cd TelGravity
-   ```
-
-2. **Install dependencies and build:**
+1. **Prerequisite 1: Install Dependencies (`npm install`)**:
    ```bash
    npm install
    npm run build
    ```
+2. **Prerequisite 2: Telegram RTL Formatting Skill (`persian-rtl-formatter`)**:
+   - TelGravity includes the `persian-rtl-formatter` skill in `skills/persian-rtl-formatter`.
+   - You can click **"Prerequisite 2: Install Telegram RTL Skill"** on the Web Dashboard to copy it into Antigravity's global skills catalog.
+   - **Alternative quick prompt (No installation required)**:  
+     If you prefer not to install the skill, simply send this prompt at the beginning of your chat session with Antigravity:
+     > *"Telegram RTL Rule: In all Persian or bilingual outputs, always start every line and bullet point with a Persian word or phrasing (e.g. instead of '• Bold: text', write '• حالت Bold: text'). Avoid starting lines with English words or parentheses so that Telegram maintains clean RTL alignment."*
 
-3. **Configure your environment (`.env`):**
-   ```env
-   TELEGRAM_BOT_TOKEN=your_bot_token_from_botfather
-   ALLOWED_USER_IDS=your_numeric_telegram_id
-   ```
+---
 
-4. **Launch the bot or dashboard:**
-   ```bash
-   npm run start:built      # Direct bot runner
-   npm run ui               # Web dashboard UI (http://127.0.0.1:3888)
-   ```
+### Step 1: Get Dedicated Bot Token from @BotFather
+
+1. Open the official [@BotFather](https://t.me/BotFather) in Telegram.
+2. Send the command `/newbot`.
+3. Choose a friendly display name (e.g. `Antigravity Remote`) and an English username ending in `bot` (e.g. `my_antigravity_bot`).
+4. Copy the API Token given to you (e.g. `123456789:ABCdefGhI...`) into the **Telegram Bot Token** field in the Web Dashboard or `.env` file.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/botfather-guide-en.png" alt="BotFather Step-by-Step Guide" width="85%">
+</p>
+
+---
+
+### Step 2: Get Numeric Telegram ID from @userinfobot
+
+For the security of your computer and code, the bot only responds to your verified Telegram account; unauthorized users are automatically blocked.
+
+1. Open the official [@userinfobot](https://t.me/userinfobot) and press `/start`.
+2. Copy the numeric digits next to **Id:** (e.g. `999999999`).
+3. Paste into **Allowed Telegram User ID** (`ALLOWED_USER_IDS`) in the dashboard or `.env`.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/userid-guide-en.jpg" alt="How to Get Your Numeric Telegram User ID" width="85%">
+</p>
+
+---
+
+### Step 3: Smart Auto-Discovery of Projects
+
+No manual directory configuration needed! TelGravity automatically discovers all your active projects and conversations directly from the Antigravity runtime environment (`~/.gemini/antigravity`).
+
+---
+
+### Step 4: Save, Start Service & Test in Telegram
+
+1. Click **"Save Changes"** in the Web Dashboard.
+2. Click **"Start Bot Service"** until the status badge turns **Online & Ready**.
+3. Open Telegram and send `/start` to your bot!
+
+```bash
+# Launch the graphical Web Dashboard at http://127.0.0.1:3888
+npm run ui
+
+# Or run headless daemon mode in the background
+npm run start:built
+```
+
+---
+
+### Step 5: Automated File Archiving (`Archie file Send&Receive/`)
+
+TelGravity automatically routes, organizes, and archives all inbound and outbound media without data loss:
+
+- **`Receive/` (Inbound):** Files sent by you to the bot / Antigravity from Telegram.
+- **`Send/` (Outbound):** Files sent by the bot / Antigravity to you on Telegram.
+
+```
+Archie file Send&Receive/
+├── Receive/               # Inbound files from user to bot
+│   ├── Images/            # Photos, bug screenshots & visual assets
+│   ├── Voices/            # Voice notes and audio recordings
+│   ├── PDF/               # Books, papers & reference documents
+│   └── Documents/         # Code files, configs & attachments
+└── Send/                  # Outbound files from bot to Telegram
+    ├── Screenshots/       # Live window screenshots captured from Antigravity
+    ├── Images/            # AI-generated charts, diagrams & pictures
+    ├── PDF/               # Exported reports & documentation
+    └── Documents/         # Generated code, log files & deliverables
+```
 
 ---
 
@@ -116,6 +175,7 @@ The interactive web dashboard will automatically open at `http://127.0.0.1:3888`
 ┌─────────────────┐       Telegram Bot API       ┌───────────────────────────┐
 │  Telegram App   │ ◄──────────────────────────► │    TelGravity Service     │
 │ (Phone/Desktop) │                              │     (Node.js / grammY)    │
+│                 │                              │ Web Dashboard (Port 3888) │
 └─────────────────┘                              └─────────────┬─────────────┘
                                                                │
                                                    Chrome DevTools Protocol

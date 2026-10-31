@@ -65,3 +65,6 @@ test_font.woff2
 user_languages.json
 
 generate_history.js
+
+# Test outputs
+test-results.json
