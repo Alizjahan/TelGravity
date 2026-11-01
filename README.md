@@ -154,6 +154,10 @@ Archie file Send&Receive/
     └── Documents/         # Generated code, log files & deliverables
 ```
 
+> [!TIP]
+> **Built-in `telgravity-file-bridge` Skill:**
+> This folder tree and bidirectional file transfer is automated via the bundled skill. It **activates exclusively during remote Telegram sessions**, ensuring that normal local work directly on your PC remains standard and untouched while remote exchanges are neatly cataloged.
+
 ---
 
 ## 🤖 Telegram Commands Reference

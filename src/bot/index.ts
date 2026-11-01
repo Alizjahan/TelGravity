@@ -1,4 +1,4 @@
-import { Bot, Context, InlineKeyboard } from 'grammy';
+import { Bot, Context, InlineKeyboard, InputFile } from 'grammy';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { AntigravityNativeService } from '../services/antigravityNativeService';
@@ -12,7 +12,10 @@ import {
     getReceivedImagesDir, 
     getReceivedVoicesDir, 
     getReceivedPdfDir, 
-    getReceivedDocumentsDir, 
+    getReceivedDocumentsDir,
+    getSentImagesDir,
+    getSentPdfDir,
+    getSentDocumentsDir,
     ensureAllStorageDirsExist 
 } from '../utils/storagePaths';
 import * as path from 'path';
@@ -114,6 +117,93 @@ async function sendChunkedTelegramReply(
             }
         }
     }
+}
+
+// Track start time of user prompts to detect freshly generated files in Send/
+const userTurnStartTime = new Map<string, number>();
+
+/**
+ * Detects [SEND_FILE: <path>] tags or files created in Send/ directory,
+ * delivers them to the user via Telegram, and returns the cleaned text.
+ */
+async function deliverGeneratedFilesAndCleanText(
+    bot: Bot,
+    chatId: number | string,
+    rawText: string,
+    isFa: boolean,
+    sinceTimeMs?: number
+): Promise<string> {
+    const fileTagRegex = /\[(?:SEND_FILE|SEND_DOCUMENT|SEND_PHOTO|FILE|DOCUMENT):\s*([^\]]+)\]/gi;
+    const filesToDeliver: string[] = [];
+    let match: RegExpExecArray | null;
+
+    while ((match = fileTagRegex.exec(rawText)) !== null) {
+        const filePath = match[1].trim();
+        if (filePath && !filesToDeliver.includes(filePath)) {
+            filesToDeliver.push(filePath);
+        }
+    }
+
+    // Clean tags from visible text
+    let cleanedText = rawText.replace(fileTagRegex, '').trim();
+
+    // If sinceTimeMs is provided, also check Send subdirectories for recently modified/created files
+    if (sinceTimeMs) {
+        const sendDirs = [getSentPdfDir(), getSentImagesDir(), getSentDocumentsDir()];
+        for (const dir of sendDirs) {
+            try {
+                if (fs.existsSync(dir)) {
+                    const entries = fs.readdirSync(dir);
+                    for (const entry of entries) {
+                        const fullPath = path.join(dir, entry);
+                        const stat = fs.statSync(fullPath);
+                        if (stat.isFile() && stat.mtimeMs >= sinceTimeMs) {
+                            if (!filesToDeliver.includes(fullPath)) {
+                                filesToDeliver.push(fullPath);
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                logger.debug('[Bot] Error scanning send directory:', err);
+            }
+        }
+    }
+
+    // Send detected files to Telegram
+    for (const rawFilePath of filesToDeliver) {
+        try {
+            const resolvedPath = path.isAbsolute(rawFilePath) ? rawFilePath : path.resolve(process.cwd(), rawFilePath);
+            if (fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isFile()) {
+                const ext = path.extname(resolvedPath).toLowerCase();
+                const isImage = ['.png', '.jpg', '.jpeg', '.webp'].includes(ext);
+                const fileName = path.basename(resolvedPath);
+
+                logger.info(`[Bot] Delivering file to user ${chatId}: ${resolvedPath}`);
+                if (isImage) {
+                    await bot.api.sendPhoto(chatId, new InputFile(resolvedPath), {
+                        caption: isFa 
+                            ? `📸 <b>تصویر تحویلی:</b> <code>${escapeHtml(fileName)}</code>` 
+                            : `📸 <b>Delivered Image:</b> <code>${escapeHtml(fileName)}</code>`,
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    await bot.api.sendDocument(chatId, new InputFile(resolvedPath), {
+                        caption: isFa 
+                            ? `📁 <b>فایل تحویلی:</b> <code>${escapeHtml(fileName)}</code>` 
+                            : `📁 <b>Delivered File:</b> <code>${escapeHtml(fileName)}</code>`,
+                        parse_mode: 'HTML'
+                    });
+                }
+            } else {
+                logger.warn(`[Bot] Tagged file does not exist: ${resolvedPath}`);
+            }
+        } catch (err) {
+            logger.error(`[Bot] Failed to deliver file ${rawFilePath}:`, err);
+        }
+    }
+
+    return cleanedText;
 }
 
 export const startBot = async () => {
@@ -843,6 +933,7 @@ export const startBot = async () => {
         const lang = getUserLang(userId);
         const isFa = lang === 'fa';
         
+        userTurnStartTime.set(userId, Date.now() - 2000);
         logger.info(`[Bot] Incoming prompt from ${userId}: "${promptText.slice(0, 50)}..."`);
 
         // Prioritize the conversation explicitly chosen by the user in Telegram
@@ -880,6 +971,16 @@ export const startBot = async () => {
         const unwatch = AntigravityNativeService.watchConversationCompletion(deliveryConvoId, async (fullReply) => {
             try {
                 logger.info(`[Bot] Output received for ${userId} (${fullReply.length} chars). Sending...`);
+                
+                // Deliver any generated deliverables and clean text
+                const cleanedReply = await deliverGeneratedFilesAndCleanText(
+                    bot,
+                    ctx.chat!.id,
+                    fullReply,
+                    isFa,
+                    userTurnStartTime.get(userId)
+                );
+
                 // Mark step as delivered to prevent duplicate notification from background watcher
                 const latest = AntigravityNativeService.getLastCompletedResponse(deliveryConvoId);
                 if (latest) {
@@ -890,7 +991,7 @@ export const startBot = async () => {
                 await sendChunkedTelegramReply(
                     (text, options) => ctx.reply(text, options),
                     title,
-                    fullReply
+                    cleanedReply || fullReply
                 );
                 logger.info(`[Bot] Output delivered successfully to ${userId}`);
             } catch (err) {
@@ -899,7 +1000,18 @@ export const startBot = async () => {
         });
         userWatchers.set(userId, unwatch);
 
-        const ok = await AntigravityNativeService.sendPrompt(promptText);
+        const sessionBanner = `[TelGravity Remote Session]
+(کاربر از راه دور از طریق ربات تلگرام پیام فرستاده است.
+• فایل‌های ارسالی کاربر در: Archie file Send&Receive/Receive/ ذخیره شده‌اند.
+• هر فایل/گزارش/کد/نموداری که برای تحویل به کاربر ایجاد می‌کنید در: Archie file Send&Receive/Send/ ذخیره نمایید.
+• برای ارسال مستقیم فایل به تلگرام کاربر، از برچسب [SEND_FILE: <path>] در پاسخ استفاده کنید.)
+--------------------------------------------------\n`;
+
+        const finalPrompt = promptText.includes('[TelGravity')
+            ? promptText
+            : `${sessionBanner}${promptText}`;
+
+        const ok = await AntigravityNativeService.sendPrompt(finalPrompt);
         logger.info(`[Bot] sendPrompt returned: ${ok}`);
         if (ok) {
             const stopKeyboard = new InlineKeyboard()
@@ -1098,11 +1210,18 @@ export const startBot = async () => {
                     logger.info(`[AutoNotify] Delivering completed turn (step ${latest.step}) to user ${uid}`);
 
                     const isFa = getUserLang(uid) === 'fa';
+                    const cleanedReply = await deliverGeneratedFilesAndCleanText(
+                        bot,
+                        uid,
+                        latest.content,
+                        isFa,
+                        userTurnStartTime.get(uid)
+                    );
                     const title = isFa ? '🔔 <b>خروجی دستیار Antigravity:</b>' : '🔔 <b>Antigravity Assistant Output:</b>';
                     await sendChunkedTelegramReply(
                         (text, options) => bot.api.sendMessage(uid, text, options),
                         title,
-                        latest.content
+                        cleanedReply || latest.content
                     );
                 } else if (lastStep === undefined) {
                     userLastDeliveredStep.set(stepKey, latest.step);
