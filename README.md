@@ -15,7 +15,7 @@
 
 Control, monitor, prompt, and interact with your **Google Antigravity** AI assistant seamlessly from your smartphone or desktop via Telegram. Features live window screenshots, voice prompt execution, task aborting, and automated native project discovery.
 
-[English Documentation](#overview) | [راهنمای فارسی](./README_FA.md)
+[English Documentation](#overview) | [راهنمای فارسی](./README_FA.md) | [🚀 Live Interactive Setup Guide](https://alizjahan.github.io/TelGravity/)
 
 </div>
 
@@ -59,6 +59,10 @@ Whether you are away from your workstation, commuting, or simply monitoring long
 ---
 
 ## 🚀 Step-by-Step Setup & Management Guide
+
+> [!TIP]
+> **Prefer a visual interactive experience?**  
+> Open the [**🚀 Live Interactive Web Guide (with dark theme, animations & click-to-copy)**](https://alizjahan.github.io/TelGravity/) directly in your browser!
 
 TelGravity comes with an interactive graphical Web Dashboard (`http://127.0.0.1:3888`) designed for rapid zero-friction setup in 5 simple steps:
 

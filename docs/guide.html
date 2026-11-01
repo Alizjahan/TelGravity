@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TelGravity — Setup & Mission Control Guide</title>
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/app.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #060913;
+            --bg-card: rgba(13, 19, 34, 0.85);
+            --border-glow: rgba(56, 189, 248, 0.28);
+            --accent-cyan: #38bdf8;
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+            --accent-green: #10b981;
+            --accent-rose: #f43f5e;
+            --accent-amber: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 80%, rgba(14, 165, 233, 0.06) 0%, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        html[dir="ltr"] body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Top Navigation Header */
+        .navbar {
+            background: rgba(10, 15, 29, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 14px 24px;
+        }
+
+        .nav-container {
+            max-width: 920px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.2));
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+            overflow: hidden;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+
+        .brand-icon:hover {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        .brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .brand-text h1 {
+            font-size: 19px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+
+        .badge-pill {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-lang {
+            cursor: pointer;
+            border: 1px solid rgba(168, 85, 247, 0.45);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(59, 130, 246, 0.22));
+            color: #c084fc;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            outline: none;
+        }
+
+        .btn-lang:hover {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.35), rgba(59, 130, 246, 0.35));
+            border-color: rgba(168, 85, 247, 0.8);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-github {
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            padding: 7px 15px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-github:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.15);
+        }
+
+        /* Main Container */
+        .main-wrapper {
+            max-width: 920px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 32px 20px 60px 20px;
+            flex: 1;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.88));
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 22px;
+            padding: 24px 28px;
+            margin-bottom: 28px;
+            box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.7), 0 0 35px rgba(56, 189, 248, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(56, 189, 248, 0.12);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .hero-desc {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* Step Card Styling */
+        .modal-step {
+            background: rgba(13, 19, 34, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 22px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: all 0.25s ease;
+        }
+
+        .modal-step:hover {
+            border-color: rgba(56, 189, 248, 0.38);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 35px -10px rgba(0, 0, 0, 0.6), 0 0 25px rgba(56, 189, 248, 0.12);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .step-badge {
+            background: linear-gradient(135deg, #0284c7, #6366f1);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 14px;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+        }
+
+        .step-title {
+            font-size: 16.5px;
+            font-weight: 800;
+            color: #f8fafc;
+        }
+
+        .step-body {
+            font-size: 13.8px;
+            line-height: 1.85;
+            color: #cbd5e1;
+            padding-right: 46px;
+        }
+
+        html[dir="ltr"] .step-body {
+            padding-right: 0;
+            padding-left: 46px;
+        }
+
+        @media (max-width: 640px) {
+            .step-body {
+                padding-right: 0 !important;
+                padding-left: 0 !important;
+            }
+        }
+
+        .step-body code {
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13.5px;
+            font-weight: 700;
+            direction: ltr !important;
+            unicode-bidi: isolate !important;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            vertical-align: baseline;
+            user-select: all;
+        }
+
+        .step-body code:hover {
+            color: #7dd3fc;
+            background: rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.45);
+        }
+
+        .step-link, .bidi-ltr {
+            direction: ltr !important;
+            unicode-bidi: isolate !important;
+            display: inline-block;
+        }
+
+        .step-link {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed rgba(56, 189, 248, 0.45);
+            transition: all 0.2s;
+        }
+
+        .step-link:hover {
+            color: #7dd3fc;
+            border-bottom-style: solid;
+        }
+
+        .step-subcard-svg {
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0;
+        }
+
+        /* Flowchart and Tree in Step 5 */
+        .archive-flowchart-card {
+            margin-top: 16px;
+            background: rgba(6, 11, 25, 0.75);
+            border: 1px solid rgba(56, 189, 248, 0.22);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .flowchart-header {
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .flowchart-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flow-root-banner {
+            background: linear-gradient(145deg, rgba(14, 165, 233, 0.12), rgba(99, 102, 241, 0.08));
+            border: 1px solid rgba(56, 189, 248, 0.28);
+            border-radius: 12px;
+            padding: 14px 18px;
+            text-align: center;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .flow-root-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            padding: 3px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            margin-bottom: 6px;
+        }
+
+        .flow-root-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffffff;
+            direction: ltr;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .flow-root-desc {
+            font-size: 12px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        .flow-columns-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .flow-columns-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .flow-card {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .flow-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .flow-badge {
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 6px;
+            align-self: flex-start;
+        }
+
+        .flow-in .flow-badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .flow-out .flow-badge {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .flow-items {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .flow-node {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.15s;
+        }
+
+        .flow-node:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(56, 189, 248, 0.25);
+        }
+
+        .flow-name {
+            font-size: 12px;
+            font-weight: 700;
+            color: #e2e8f0;
+            direction: ltr;
+        }
+
+        .flow-desc {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .folder-tree-box {
+            background: #060913;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px 18px;
+        }
+
+        .tree-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #94a3b8;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .tree-tag {
+            font-size: 11px;
+            background: rgba(56, 189, 248, 0.12);
+            color: #38bdf8;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .tree-code {
+            margin: 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.75;
+            color: #cbd5e1;
+            direction: ltr !important;
+            text-align: left !important;
+            white-space: pre !important;
+            overflow-x: auto;
+            background: transparent !important;
+            border: none !important;
+            user-select: text !important;
+        }
+
+        .tree-svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            display: inline-block;
+            vertical-align: -2px;
+            margin: 0 4px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4));
+        }
+
+        .flow-svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .flow-badge-svg {
+            width: 13px;
+            height: 13px;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            display: inline-block;
+            vertical-align: -1px;
+            margin-inline-end: 4px;
+        }
+
+        /* Toast Notification */
+        .copy-toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #0f172a;
+            border: 1px solid #10b981;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(16, 185, 129, 0.3);
+            color: #f8fafc;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 10000;
+            direction: ltr;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        /* App Footer */
+        .app-footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14.5px;
+            color: #94a3b8;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            direction: ltr !important;
+        }
+
+        .app-footer a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.2s, text-decoration 0.2s;
+        }
+
+        .app-footer a:hover {
+            color: #7dd3fc;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="https://github.com/Alizjahan/TelGravity" class="brand-link">
+                <div class="brand-icon">
+                    <img src="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/logo.png" alt="TelGravity Logo">
+                </div>
+                <div class="brand-text">
+                    <h1>TelGravity <span class="badge-pill">v1.2.0</span></h1>
+                    <p data-i18n="navSubtitle">راهنمای راه‌اندازی و مدیریت ربات تلگرام</p>
+                </div>
+            </a>
+            <div class="nav-actions">
+                <button class="btn-lang" onclick="toggleLanguage()">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <span id="langBtnText">English</span>
+                </button>
+                <a href="https://github.com/Alizjahan/TelGravity" class="btn-github" target="_blank">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                    <span>GitHub</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-wrapper">
+
+        <!-- Hero Header -->
+        <div class="hero-banner">
+            <div class="hero-tag">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span data-i18n="heroBadge">۵ مرحله سریع و کاملاً امن</span>
+            </div>
+            <h2 class="hero-title" data-i18n="heroTitle">راهنمای راه‌اندازی و مدیریت TelGravity</h2>
+            <p class="hero-desc" data-i18n="heroDesc">اتصال هوشمند، پایدار و دوطرفه به دستیار هوش مصنوعی Google Antigravity در ۵ مرحله ساده به همراه آرشیو خودکار فایل‌ها و اسناد.</p>
+        </div>
+
+        <!-- Step 0: Prerequisites -->
+        <div class="modal-step">
+            <div class="step-header">
+                <div class="step-badge" data-i18n="step0Badge">۰</div>
+                <div class="step-title" data-i18n="step0Title">مرحله صفرم: نصب پیش‌نیازهای اولیه سیستم (Prerequisites)</div>
+            </div>
+            <div class="step-body" data-i18n="step0Body">
+                <!-- Dynamically filled by I18N -->
+            </div>
+        </div>
+
+        <!-- Step 1: BotFather Token -->
+        <div class="modal-step">
+            <div class="step-header">
+                <div class="step-badge" data-i18n="step1Badge">۱</div>
+                <div class="step-title" data-i18n="step1Title">مرحله اول: دریافت توکن اختصاصی ربات (Bot Token) از BotFather</div>
+            </div>
+            <div class="step-body" data-i18n="step1Body">
+                <!-- Dynamically filled by I18N -->
+            </div>
+        </div>
+
+        <!-- Step 2: User ID -->
+        <div class="modal-step">
+            <div class="step-header">
+                <div class="step-badge" data-i18n="step2Badge">۲</div>
+                <div class="step-title" data-i18n="step2Title">مرحله دوم: دریافت شناسه عددی تلگرام (Allowed User ID)</div>
+            </div>
+            <div class="step-body" data-i18n="step2Body">
+                <!-- Dynamically filled by I18N -->
+            </div>
+        </div>
+
+        <!-- Step 3: Auto-Discovery -->
+        <div class="modal-step">
+            <div class="step-header">
+                <div class="step-badge" data-i18n="step3Badge">۳</div>
+                <div class="step-title" data-i18n="step3Title">مرحله سوم: کشف خودکار پروژه‌ها و گفتگوها (Auto-Discovery)</div>
+            </div>
+            <div class="step-body" data-i18n="step3Body">
+                <!-- Dynamically filled by I18N -->
+            </div>
+        </div>
+
+        <!-- Step 4: Start & Test -->
+        <div class="modal-step">
+            <div class="step-header">
+                <div class="step-badge" data-i18n="step4Badge">۴</div>
+                <div class="step-title" data-i18n="step4Title">مرحله چهارم: ذخیره، استارت سرویس و تست در تلگرام</div>
+            </div>
+            <div class="step-body" data-i18n="step4Body">
+                <!-- Dynamically filled by I18N -->
+            </div>
+        </div>
+
+        <!-- Step 5: Archie File Storage & Tree -->
+        <div class="modal-step">
+            <div class="step-header">
+                <div class="step-badge" data-i18n="step5Badge">۵</div>
+                <div class="step-title" data-i18n="step5Title">مرحله پنجم: آرشیو و ذخیره‌سازی خودکار فایل‌ها (Archie file Send&Receive)</div>
+            </div>
+            <div class="step-body" data-i18n="step5Body">
+                <!-- Dynamically filled by I18N -->
+            </div>
+        </div>
+
+        <!-- App Footer with Clickable Profiles -->
+        <footer class="app-footer">
+            <span>Developed with ❤️ by <a href="https://github.com/Alizjahan" target="_blank" rel="noopener noreferrer">Aliz</a> &amp; <a href="https://github.com/EhsanShahbazii" target="_blank" rel="noopener noreferrer">Ehsan</a></span>
+        </footer>
+
+    </main>
+
+    <!-- Global Click-to-Copy Toast -->
+    <div id="copyToast" class="copy-toast">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span id="toastText">کپی شد!</span>
+    </div>
+
+    <script>
+        const I18N = {
+            fa: {
+                navSubtitle: 'راهنمای راه‌اندازی و مدیریت ربات تلگرام',
+                heroBadge: '۵ مرحله سریع و کاملاً امن',
+                heroTitle: 'راهنمای راه‌اندازی و مدیریت TelGravity',
+                heroDesc: 'اتصال هوشمند، پایدار و دوطرفه به دستیار هوش مصنوعی Google Antigravity در ۵ مرحله ساده به همراه آرشیو خودکار فایل‌ها و اسناد.',
+                step0Badge: '۰',
+                step0Title: 'مرحله صفرم: نصب پیش‌نیازهای اولیه سیستم (Prerequisites)',
+                step0Body: `<p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.8; margin-bottom: 12px;">پیش از اتصال و راه‌اندازی ربات، حتماً دو پیش‌نیاز زیر را یک‌بار راه‌اندازی و نصب نمایید:</p>
+<div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(244, 63, 94, 0.3); padding: 14px 18px; border-radius: 12px;">
+        <div style="font-weight: 700; color: #f43f5e; font-size: 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+            <svg class="step-subcard-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            <span>پیش‌نیاز اول: نصب پکیج‌ها و کتابخانه‌ها (Dependencies)</span>
+        </div>
+        <div style="font-size: 13px; color: #94a3b8; line-height: 1.7; margin-bottom: 8px;">نصب تمام وابستگی‌های سیستمی و کامپایل پروژه با دستور زیر در خط فرمان:</div>
+        <pre class="copy-cmd" style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); padding: 8px 12px; border-radius: 8px; font-size: 13px; color: #38bdf8; font-family: monospace; cursor: pointer;">npm install &amp;&amp; npm run build</pre>
+    </div>
+    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(168, 85, 247, 0.3); padding: 14px 18px; border-radius: 12px;">
+        <div style="font-weight: 700; color: #c084fc; font-size: 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+            <svg class="step-subcard-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>پیش‌نیاز دوم: اسکیل راست‌چین پیام‌های تلگرام (Persian RTL Skill)</span>
+        </div>
+        <div style="font-size: 13px; color: #94a3b8; line-height: 1.7; margin-bottom: 8px;">ثبت اسکیل <code>persian-rtl-formatter</code> در Antigravity تا پیام‌ها و لیست‌های فارسی و دوزبانه در تلگرام کاملاً راست‌چین و منظم بمانند.</div>
+        <div style="margin-top: 10px; background: rgba(56, 189, 248, 0.08); border: 1px dashed rgba(56, 189, 248, 0.35); padding: 10px 14px; border-radius: 8px;">
+            <div style="font-weight: 700; color: #38bdf8; font-size: 12.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                <svg class="step-subcard-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.7 3.5 6h7c2-1.3 3.5-3.5 3.5-6a7 7 0 0 0-7-7z"/></svg>
+                <span>روش فوق‌العاده آسان (بدون نیاز به نصب اسکیل):</span>
+            </div>
+            <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.7; margin-bottom: 8px;">کافیه این پرامپت رو همیشه اول چتتون با Antigravity بهش بدین همین و بس!!</div>
+            <pre class="copy-cmd" title="برای کپی کلیک کنید" style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); padding: 10px 12px; border-radius: 8px; font-size: 12px; color: #e2e8f0; line-height: 1.7; white-space: pre-wrap; font-family: inherit; cursor: pointer; margin: 0;">قانون راست‌چین تلگرام: در تمامی خروجی‌های فارسی یا دوزبانه، تمام خطوط و بولت‌پوینت‌ها را حتماً با یک واژه یا عبارت فارسی آغاز کن (مثلاً به جای «• Bold: متن» بنویس «• حالت Bold: متن» یا «• ویژگی Bold: متن»). از شروع مستقیم خطوط با کلمات انگلیسی یا پرانتز خودداری کن تا خروجی در تلگرام کاملاً راست‌چین و منظم باشد.</pre>
+        </div>
+    </div>
+</div>`,
+                step1Badge: '۱',
+                step1Title: 'مرحله اول: دریافت توکن اختصاصی ربات (Bot Token) از BotFather',
+                step1Body: `<p>۱. وارد ربات رسمی <a class="step-link bidi-ltr" href="https://t.me/BotFather" target="_blank">@BotFather</a> در تلگرام شوید.</p>
+<p>۲. دستور <code class="copy-cmd" title="کلیک برای کپی">/newbot</code> را ارسال کنید.</p>
+<p>۳. ابتدا یک نام دلخواه برای ربات (مثلاً <code class="bidi-ltr">Antigravity Remote</code>) و سپس یک یوزرنیم انگلیسی که حتماً به <code class="bidi-ltr">bot</code> ختم شود (مانند <code class="bidi-ltr">my_antigravity_bot</code>) انتخاب کنید.</p>
+<p>۴. کدی که شبیه به <code class="bidi-ltr">123456789:ABCdefGhI...</code> به شما داده می‌شود همان <strong>توکن ربات</strong> است. آن را کپی کرده و در داشبورد یا فایل <code>.env</code> وارد کنید.</p>
+<div style="margin-top: 14px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14); max-width: 520px; box-shadow: 0 8px 25px rgba(0,0,0,0.6);">
+    <a href="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/botfather-guide-fa.png" target="_blank" title="مشاهده تصویر با کیفیت اصلی">
+        <img src="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/botfather-guide-fa.png" alt="راهنمای دریافت توکن BotFather" style="width: 100%; display: block;">
+    </a>
+</div>`,
+                step2Badge: '۲',
+                step2Title: 'مرحله دوم: دریافت شناسه عددی تلگرام (Allowed User ID)',
+                step2Body: `<p>جهت حفظ امنیت کامل سیستم و کدها، ربات فقط به اکانت تلگرام شما پاسخ می‌دهد و بقیه افراد مسدود خواهند بود.</p>
+<p>۱. وارد ربات رسمی <a class="step-link bidi-ltr" href="https://t.me/userinfobot" target="_blank">@userinfobot</a> شوید و دکمه Start را بزنید.</p>
+<p>۲. عدد چندرقمی روبروی عبارت <strong class="bidi-ltr" style="color: #94a3b8;">Id:</strong> (مثال: <code class="copy-cmd bidi-ltr" title="کلیک برای کپی">999999999</code>) را کپی کرده و در فیلد <code>ALLOWED_USER_IDS</code> قرار دهید.</p>
+<div style="margin-top: 14px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14); max-width: 520px; box-shadow: 0 8px 25px rgba(0,0,0,0.6);">
+    <a href="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/userid-guide-fa.png" target="_blank" title="مشاهده تصویر با کیفیت اصلی">
+        <img src="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/userid-guide-fa.png" alt="راهنمای دریافت شناسه عددی تلگرام" style="width: 100%; display: block;">
+    </a>
+</div>`,
+                step3Badge: '۳',
+                step3Title: 'مرحله سوم: کشف خودکار پروژه‌ها و گفتگوها (Auto-Discovery)',
+                step3Body: `<p>نیازی به وارد کردن دستی آدرس پوشه پروژه‌ها نیست! ربات به صورت کاملاً خودکار تمامی پروژه‌ها و گفتگوهای فعال شما را مستقیماً از داخل پایگاه داده محیط Antigravity شناسایی کرده و در اختیارتان می‌گذارد.</p>`,
+                step4Badge: '۴',
+                step4Title: 'مرحله چهارم: ذخیره، استارت سرویس و تست در تلگرام',
+                step4Body: `<p>۱. فایل اجرایی <code>TelGravity.exe</code> (یا <code>run_bot.bat</code>) را باز کنید، یا با دستور <code>npm run ui</code> داشبورد را اجرا کنید.</p>
+<p>۲. دکمه <strong>«شروع سرویس ربات»</strong> را بزنید تا وضعیت به <span style="color:#34d399;font-weight:700;">آنلاین و آماده دریافت</span> تبدیل شود.</p>
+<p>۳. وارد تلگرام خود شوید و به ربات پیام <code class="copy-cmd" title="کلیک برای کپی">/start</code> را بفرستید!</p>
+<div style="margin-top: 12px; background: rgba(0,0,0,0.3); padding: 12px 16px; border-radius: 12px; border-right: 3px solid #38bdf8;">
+    <div style="font-weight: 700; color: #38bdf8; margin-bottom: 6px;">دستورات و قابلیت‌های اصلی ربات:</div>
+    <ul style="padding-right: 20px; font-size: 13px; color: #cbd5e1; line-height: 1.8;">
+        <li><code class="copy-cmd" title="کلیک برای کپی">/start</code> : باز کردن منوی شیشه‌ای کنترل، فهرست پروژه‌ها و گفتگوها</li>
+        <li><code class="copy-cmd" title="کلیک برای کپی">/screenshot</code> : دریافت فوری اسکرین‌شات زنده از پنجره Antigravity</li>
+        <li><code class="copy-cmd" title="کلیک برای کپی">/last</code> : بازیابی آخرین پاسخ هوش مصنوعی در صورت قطعی اینترنت</li>
+        <li><strong>ارسال ویس (Voice)</strong> : ارسال پیام صوتی برای اجرای مستقیم دستورات با صدا</li>
+        <li><strong>ارسال عکس و فایل</strong> : ارسال تصویر خطا، سند یا فایل جهت بررسی توسط مدل</li>
+    </ul>
+</div>`,
+                step5Badge: '۵',
+                step5Title: 'مرحله پنجم: آرشیو و ذخیره‌سازی خودکار فایل‌ها (Archie file Send&Receive)',
+                step5Body: `
+<div style="margin-bottom: 16px; background: rgba(15, 23, 42, 0.65); padding: 14px 18px; border-radius: 14px; border: 1px solid rgba(56, 189, 248, 0.22);">
+    <div style="font-weight: 700; color: #38bdf8; font-size: 14px; margin-bottom: 8px;">۱. منطق تفکیک جریان ورودی و خروجی (Send و Receive):</div>
+    <ul style="padding-right: 20px; font-size: 13.5px; color: #cbd5e1; line-height: 1.9;">
+        <li><strong style="color: #67e8f9;">Receive (دریافتی):</strong> فایل‌هایی که کاربر از تلگرام برای ربات / Antigravity می‌فرستد.</li>
+        <li><strong style="color: #60a5fa;">Send (ارسالی):</strong> فایل‌هایی که ربات / Antigravity برای کاربر به تلگرام می‌فرستد.</li>
+        <li>تمام فایل‌ها بدون از دست رفتن داده‌ها در این دایرکتوری به صورت خودکار بایگانی می‌شوند.</li>
+    </ul>
+</div>
+
+<div class="archive-flowchart-card">
+    <div class="flowchart-header">
+        <span class="flowchart-title">
+            <svg class="flow-svg" viewBox="0 0 24 24" stroke="#38bdf8"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            فلوچارت گردش و تفکیک فایل‌های ورودی و خروجی
+        </span>
+    </div>
+
+    <div class="flow-root-banner">
+        <div class="flow-root-badge">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            <span>پوشه اصلی ریشه پروژه (Project Root)</span>
+        </div>
+        <div class="flow-root-title">Archie file Send&Receive/</div>
+        <div class="flow-root-desc">تفکیک کامل ورودی‌ها (Receive) و خروجی‌ها (Send) با ذخیره‌سازی خودکار</div>
+    </div>
+
+    <div class="flow-columns-grid">
+        <div class="flow-card flow-in">
+            <div class="flow-badge">دریافتی از کاربر (Receive)</div>
+            <div class="flow-items">
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#38bdf8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <div>
+                        <div class="flow-name">Images/</div>
+                        <div class="flow-desc">عکس‌ها و اسکرین‌شات‌های ارسالی شما</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#a78bfa"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                    <div>
+                        <div class="flow-name">Voices/</div>
+                        <div class="flow-desc">ویس‌ها و پیام‌های صوتی ضبط‌شده شما</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#f43f5e"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <div>
+                        <div class="flow-name">PDF/</div>
+                        <div class="flow-desc">کتاب‌ها، مقالات و فایل‌های PDF ارسالی شما</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#34d399"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="10 13 8 15 10 17"/><polyline points="14 13 16 15 14 17"/></svg>
+                    <div>
+                        <div class="flow-name">Documents/</div>
+                        <div class="flow-desc">فایل‌های کد، اسناد متنی و ضمیمه‌ها</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-card flow-out">
+            <div class="flow-badge">ارسالی به تلگرام (Send)</div>
+            <div class="flow-items">
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#fbbf24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    <div>
+                        <div class="flow-name">Screenshots/</div>
+                        <div class="flow-desc">اسکرین‌شات‌های زنده ثبت شده از Antigravity</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#38bdf8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <div>
+                        <div class="flow-name">Images/</div>
+                        <div class="flow-desc">تصاویر و چارت‌های تولیدشده توسط سیستم</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#f43f5e"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <div>
+                        <div class="flow-name">PDF/</div>
+                        <div class="flow-desc">گزارش‌ها و مستندات خروجی PDF</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#34d399"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="10 13 8 15 10 17"/><polyline points="14 13 16 15 14 17"/></svg>
+                    <div>
+                        <div class="flow-name">Documents/</div>
+                        <div class="flow-desc">کدهای نهایی، لاگ‌ها و فایل‌های تحویلی</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="folder-tree-box">
+        <div class="tree-title">
+            <span style="display: flex; align-items: center; gap: 6px;">
+                <svg class="flow-svg" viewBox="0 0 24 24" stroke="#38bdf8"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <span>ساختار درختی پوشه آرشیو (Directory Tree)</span>
+            </span>
+            <span class="tree-tag">بایگانی هوشمند</span>
+        </div>
+        <pre class="tree-code">Archie file Send&Receive/
+├── Receive/               # فایل‌های ارسال‌شده از شما در تلگرام به ربات
+│   ├── Images/            # عکس‌ها، اسکرین‌شات‌ها و تصاویر ارسالی
+│   ├── Voices/            # ویس‌ها و پیام‌های صوتی ضبط‌شده شما
+│   ├── PDF/               # کتاب‌ها، مقالات و فایل‌های پی‌دی‌اف
+│   └── Documents/         # فایل‌های کد، اسناد متنی و ضمیمه‌ها
+└── Send/                  # فایل‌های ارسال‌شده از ربات به تلگرام
+    ├── Screenshots/       # اسکرین‌شات‌های زنده و مستقیم از صفحه
+    ├── Images/            # تصاویر و چارت‌های تولیدشده توسط سیستم
+    ├── PDF/               # گزارش‌ها و مستندات خروجی پی‌دی‌اف
+    └── Documents/         # کدهای نهایی، لاگ‌ها و فایل‌های تحویلی</pre>
+    </div>
+</div>`
+            },
+            en: {
+                navSubtitle: 'Telegram Bot Setup & Management Guide',
+                heroBadge: '5 Simple & Secure Steps',
+                heroTitle: 'TelGravity Setup & Mission Control Guide',
+                heroDesc: 'Fast, intelligent, and secure two-way connection to Google Antigravity assistant in 5 simple steps with automated file archiving.',
+                step0Badge: '0',
+                step0Title: 'Step 0: Initial System Prerequisites',
+                step0Body: `<p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.8; margin-bottom: 12px;">Before connecting and launching the bot, make sure to initialize and install the two essential prerequisites below:</p>
+<div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(244, 63, 94, 0.3); padding: 14px 18px; border-radius: 12px;">
+        <div style="font-weight: 700; color: #f43f5e; font-size: 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+            <svg class="step-subcard-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            <span>Prerequisite 1: Install Packages & Dependencies</span>
+        </div>
+        <div style="font-size: 13px; color: #94a3b8; line-height: 1.7; margin-bottom: 8px;">Install all project libraries and compile TypeScript using the command below:</div>
+        <pre class="copy-cmd" style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); padding: 8px 12px; border-radius: 8px; font-size: 13px; color: #38bdf8; font-family: monospace; cursor: pointer;">npm install &amp;&amp; npm run build</pre>
+    </div>
+    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(168, 85, 247, 0.3); padding: 14px 18px; border-radius: 12px;">
+        <div style="font-weight: 700; color: #c084fc; font-size: 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+            <svg class="step-subcard-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Prerequisite 2: Telegram RTL Formatting Skill</span>
+        </div>
+        <div style="font-size: 13px; color: #94a3b8; line-height: 1.7; margin-bottom: 8px;">Installs the <code>persian-rtl-formatter</code> skill into Antigravity to maintain clean right-to-left layout for bilingual Telegram messages.</div>
+        <div style="margin-top: 10px; background: rgba(56, 189, 248, 0.08); border: 1px dashed rgba(56, 189, 248, 0.35); padding: 10px 14px; border-radius: 8px;">
+            <div style="font-weight: 700; color: #38bdf8; font-size: 12.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                <svg class="step-subcard-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.7 3.5 6h7c2-1.3 3.5-3.5 3.5-6a7 7 0 0 0-7-7z"/></svg>
+                <span>Don't want to install the skill? Simple 1-Prompt Alternative:</span>
+            </div>
+            <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.7; margin-bottom: 8px;">Simply send this prompt at the beginning of your chat with Antigravity, that's all!!</div>
+            <pre class="copy-cmd" title="Click to copy" style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); padding: 10px 12px; border-radius: 8px; font-size: 12px; color: #e2e8f0; line-height: 1.7; white-space: pre-wrap; font-family: inherit; cursor: pointer; margin: 0;">Telegram RTL Rule: In all Persian or bilingual outputs, always start every line and bullet point with a Persian word or phrasing (e.g. instead of '• Bold: text', write '• حالت Bold: text'). Avoid starting lines with English words or parentheses so that Telegram maintains clean RTL alignment.</pre>
+        </div>
+    </div>
+</div>`,
+                step1Badge: '1',
+                step1Title: 'Step 1: Get Dedicated Bot Token from @BotFather',
+                step1Body: `<p>1. Open official <a class="step-link bidi-ltr" href="https://t.me/BotFather" target="_blank">@BotFather</a> in Telegram.</p>
+<p>2. Send the command <code class="copy-cmd" title="Click to copy">/newbot</code>.</p>
+<p>3. Choose a friendly display name (e.g. <code class="bidi-ltr">Antigravity Remote</code>) and an English username ending in <code class="bidi-ltr">bot</code> (e.g. <code class="bidi-ltr">my_antigravity_bot</code>).</p>
+<p>4. The string given to you like <code class="bidi-ltr">123456789:ABCdefGhI...</code> is your <strong>Bot Token</strong>. Copy it into the dashboard or <code>.env</code> file.</p>
+<div style="margin-top: 14px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14); max-width: 520px; box-shadow: 0 8px 25px rgba(0,0,0,0.6);">
+    <a href="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/botfather-guide-en.png" target="_blank" title="View Full Quality Image">
+        <img src="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/botfather-guide-en.png" alt="BotFather Step-by-Step API Key Guide" style="width: 100%; display: block;">
+    </a>
+</div>`,
+                step2Badge: '2',
+                step2Title: 'Step 2: Get Numeric Telegram ID (Allowed User ID)',
+                step2Body: `<p>For the complete security of your computer and code, the bot only responds to your verified Telegram account; unauthorized users will be blocked.</p>
+<p>1. Open official <a class="step-link bidi-ltr" href="https://t.me/userinfobot" target="_blank">@userinfobot</a> and click Start.</p>
+<p>2. Copy the numeric digits next to <strong class="bidi-ltr" style="color: #94a3b8;">Id:</strong> (e.g. <code class="copy-cmd bidi-ltr" title="Click to copy">999999999</code>) and paste into <code>ALLOWED_USER_IDS</code>.</p>
+<div style="margin-top: 14px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14); max-width: 520px; box-shadow: 0 8px 25px rgba(0,0,0,0.6);">
+    <a href="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/userid-guide-en.jpg" target="_blank" title="View Full Quality Image">
+        <img src="https://raw.githubusercontent.com/Alizjahan/TelGravity/main/assets/userid-guide-en.jpg" alt="How to Get Your Numeric Telegram User ID" style="width: 100%; display: block;">
+    </a>
+</div>`,
+                step3Badge: '3',
+                step3Title: 'Step 3: Smart Auto-Discovery of Projects',
+                step3Body: `<p>No manual directory configuration needed! The bot automatically discovers all your active projects and conversations directly from the Antigravity runtime environment.</p>`,
+                step4Badge: '4',
+                step4Title: 'Step 4: Save, Start Service & Test in Telegram',
+                step4Body: `<p>1. Double-click <code>TelGravity.exe</code> (or <code>run_bot.bat</code>), or run <code>npm run ui</code> from terminal.</p>
+<p>2. Click <strong>"Start Bot Service"</strong> button until the status badge turns to <span style="color:#34d399;font-weight:700;">Online & Ready</span>.</p>
+<p>3. Open Telegram and send <code class="copy-cmd" title="Click to copy">/start</code> to your bot!</p>
+<div style="margin-top: 12px; background: rgba(0,0,0,0.3); padding: 12px 16px; border-radius: 12px; border-left: 3px solid #38bdf8;">
+    <div style="font-weight: 700; color: #38bdf8; margin-bottom: 6px;">Key Bot Features & Commands:</div>
+    <ul style="padding-left: 20px; font-size: 13px; color: #cbd5e1; line-height: 1.8;">
+        <li><code class="copy-cmd" title="Click to copy">/start</code> : Open interactive control menu, project list, and active chats</li>
+        <li><code class="copy-cmd" title="Click to copy">/screenshot</code> : Instant live screenshot capture from Antigravity</li>
+        <li><code class="copy-cmd" title="Click to copy">/last</code> : Retrieve last AI response in case of network interruption</li>
+        <li><strong>Voice Messages</strong> : Send audio notes to run voice-driven instructions</li>
+        <li><strong>Photos & Files</strong> : Send bug screenshots, code snaps or diagrams with captions</li>
+    </ul>
+</div>`,
+                step5Badge: '5',
+                step5Title: 'Step 5: Automated File Archiving (Archie file Send&Receive)',
+                step5Body: `
+<div style="margin-bottom: 16px; background: rgba(15, 23, 42, 0.65); padding: 14px 18px; border-radius: 14px; border: 1px solid rgba(56, 189, 248, 0.22);">
+    <div style="font-weight: 700; color: #38bdf8; font-size: 14px; margin-bottom: 8px;">1. Standardized Folder Naming & Flow Logic (Send & Receive):</div>
+    <ul style="padding-left: 20px; font-size: 13.5px; color: #cbd5e1; line-height: 1.9;">
+        <li><strong style="color: #67e8f9;">Receive (Inbound):</strong> Files sent by you to the bot / Antigravity from Telegram.</li>
+        <li><strong style="color: #60a5fa;">Send (Outbound):</strong> Files sent by the bot / Antigravity to you on Telegram.</li>
+        <li>All exchanged files are automatically archived without data loss in this directory.</li>
+    </ul>
+</div>
+
+<div class="archive-flowchart-card">
+    <div class="flowchart-header">
+        <span class="flowchart-title">
+            <svg class="flow-svg" viewBox="0 0 24 24" stroke="#38bdf8"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Inbound & Outbound File Flow & Routing
+        </span>
+    </div>
+
+    <div class="flow-root-banner">
+        <div class="flow-root-badge">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            <span>Project Root Directory</span>
+        </div>
+        <div class="flow-root-title">Archie file Send&Receive/</div>
+        <div class="flow-root-desc">Full segregation of Inbound (Receive) and Outbound (Send) with automated archiving</div>
+    </div>
+
+    <div class="flow-columns-grid">
+        <div class="flow-card flow-in">
+            <div class="flow-badge">Received from User (Receive)</div>
+            <div class="flow-items">
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#38bdf8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <div>
+                        <div class="flow-name">Images/</div>
+                        <div class="flow-desc">Photos & bug screenshots sent by you</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#a78bfa"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                    <div>
+                        <div class="flow-name">Voices/</div>
+                        <div class="flow-desc">Voice notes & audio recordings</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#f43f5e"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <div>
+                        <div class="flow-name">PDF/</div>
+                        <div class="flow-desc">E-books, papers & PDF documents</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#34d399"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="10 13 8 15 10 17"/><polyline points="14 13 16 15 14 17"/></svg>
+                    <div>
+                        <div class="flow-name">Documents/</div>
+                        <div class="flow-desc">Code files, configs & attachments</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-card flow-out">
+            <div class="flow-badge">Sent to Telegram (Send)</div>
+            <div class="flow-items">
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#fbbf24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    <div>
+                        <div class="flow-name">Screenshots/</div>
+                        <div class="flow-desc">Live window screenshots from Antigravity</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#38bdf8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <div>
+                        <div class="flow-name">Images/</div>
+                        <div class="flow-desc">Generated charts & diagram graphics</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#f43f5e"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <div>
+                        <div class="flow-name">PDF/</div>
+                        <div class="flow-desc">Exported PDF reports & summaries</div>
+                    </div>
+                </div>
+                <div class="flow-node">
+                    <svg class="flow-svg" viewBox="0 0 24 24" stroke="#34d399"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="10 13 8 15 10 17"/><polyline points="14 13 16 15 14 17"/></svg>
+                    <div>
+                        <div class="flow-name">Documents/</div>
+                        <div class="flow-desc">Code artifacts, logs & deliverables</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="folder-tree-box">
+        <div class="tree-title">
+            <span style="display: flex; align-items: center; gap: 6px;">
+                <svg class="flow-svg" viewBox="0 0 24 24" stroke="#38bdf8"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <span>Directory Tree Structure</span>
+            </span>
+            <span class="tree-tag">Smart Storage</span>
+        </div>
+        <pre class="tree-code">Archie file Send&Receive/
+├── Receive/               # Inbound files sent by user from Telegram
+│   ├── Images/            # Photos, screenshots & visual assets
+│   ├── Voices/            # Voice notes and audio recordings
+│   ├── PDF/               # Books, research papers & PDF files
+│   └── Documents/         # Code files, plain text & attachments
+└── Send/                  # Outbound files delivered to Telegram
+    ├── Screenshots/       # Live window screenshots from Antigravity
+    ├── Images/            # Generated charts, plots & diagrams
+    ├── PDF/               # Exported PDF documentation & reports
+    └── Documents/         # Generated code, logs & deliverable files</pre>
+    </div>
+</div>`
+            }
+        };
+
+        let currentLang = localStorage.getItem('telgravity_guide_lang') || 'fa';
+
+        function applyLanguage(lang) {
+            currentLang = (lang === 'en' ? 'en' : 'fa');
+            localStorage.setItem('telgravity_guide_lang', currentLang);
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = (currentLang === 'fa' ? 'rtl' : 'ltr');
+
+            const btnText = document.getElementById('langBtnText');
+            if (btnText) {
+                btnText.textContent = (currentLang === 'fa' ? 'English' : 'فارسی');
+            }
+
+            const dict = I18N[currentLang];
+            if (!dict) return;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key] !== undefined) {
+                    el.innerHTML = dict[key];
+                }
+            });
+        }
+
+        function toggleLanguage() {
+            applyLanguage(currentLang === 'fa' ? 'en' : 'fa');
+        }
+
+        // Click to copy handler with toast
+        function showCopyToast(msg) {
+            const toast = document.getElementById('copyToast');
+            const textEl = document.getElementById('toastText');
+            if (!toast || !textEl) return;
+            textEl.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2200);
+        }
+
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest('.copy-cmd') || e.target.closest('code');
+            if (!target) return;
+            if (target.closest('.tree-code')) return;
+
+            const text = target.textContent.trim();
+            if (!text) return;
+
+            const isFa = currentLang === 'fa';
+            navigator.clipboard.writeText(text).then(() => {
+                showCopyToast(isFa ? ('کپی شد: ' + text) : ('Copied: ' + text));
+            }).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showCopyToast(isFa ? ('کپی شد: ' + text) : ('Copied: ' + text));
+            });
+        });
+
+        // Initialize language
+        applyLanguage(currentLang);
+    </script>
+</body>
+</html>
