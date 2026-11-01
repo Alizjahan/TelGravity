@@ -115,17 +115,17 @@ No manual directory configuration needed! TelGravity automatically discovers all
 
 ### Step 4: Save, Start Service & Test in Telegram
 
-1. Click **"Save Changes"** in the Web Dashboard.
-2. Click **"Start Bot Service"** until the status badge turns **Online & Ready**.
-3. Open Telegram and send `/start` to your bot!
+1. **1-Click Windows App:** Simply double-click **`TelGravity.exe`** (or `run_bot.bat`).  
+   The interactive dashboard and runtime will launch automatically!
+2. **Or via Command Line:**
+   ```bash
+   # Launch the graphical Web Dashboard at http://127.0.0.1:3888
+   npm run ui
 
-```bash
-# Launch the graphical Web Dashboard at http://127.0.0.1:3888
-npm run ui
-
-# Or run headless daemon mode in the background
-npm run start:built
-```
+   # Or run headless daemon mode in the background
+   npm run start:built
+   ```
+3. Click **"Save Changes"** in the Web Dashboard, click **"Start Bot Service"**, and send `/start` to your bot in Telegram!
 
 ---
 
