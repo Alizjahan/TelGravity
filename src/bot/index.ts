@@ -345,6 +345,9 @@ export const startBot = async () => {
             keyboard.text(`📁 ${label} (${count})`, `spf:${pName.slice(0, 45)}`).row();
         }
 
+        // Cancel button
+        keyboard.text(isFa ? '❌ لغو' : '❌ Cancel', 'cancel_project_selection').row();
+
         const titleText = isFa
             ? '📁 <b>انتخاب پروژه برای مشاهده چت‌ها:</b>\nپروژه مورد نظر خود را انتخاب کنید تا گفتگوهای آن نمایش داده شود:'
             : '📁 <b>Select Project to View Chats:</b>\nSelect a project to view its conversations:';
@@ -799,6 +802,14 @@ export const startBot = async () => {
             return;
         }
 
+        if (data === 'cancel_project_selection') {
+            await ctx.answerCallbackQuery({ text: isFa ? 'لغو شد' : 'Cancelled' }).catch(() => {});
+            try {
+                await ctx.editMessageText(isFa ? '❌ عملیات انتخاب پروژه لغو شد.' : '❌ Project selection cancelled.');
+            } catch {}
+            return;
+        }
+
         if (data === 'menu_projects' || data === 'menu_chats' || data === 'show_all_project_chats') {
             await sendProjectsList(ctx, true);
             return;
@@ -872,7 +883,8 @@ export const startBot = async () => {
                     keyboard.text(`💬 ${label}`, `sc:${s.conversationId}`).row();
                 }
             }
-            keyboard.text(isFa ? '🔙 بازگشت به لیست پروژه‌ها' : '🔙 Back to Projects', 'show_all_project_chats').row();
+            keyboard.text(isFa ? '🔙 بازگشت به لیست پروژه‌ها' : '🔙 Back to Projects', 'show_all_project_chats')
+                .text(isFa ? '❌ لغو' : '❌ Cancel', 'cancel_project_selection').row();
 
             const headerName = isGen 
                 ? (isFa ? 'گفتگوهای عمومی (بدون پروژه)' : 'General Chats (No Project)') 
