@@ -1012,16 +1012,9 @@ export const startBot = async () => {
         });
         userWatchers.set(userId, unwatch);
 
-        const sessionBanner = `[TelGravity Remote Session]
-(کاربر از راه دور از طریق ربات تلگرام پیام فرستاده است.
-• فایل‌های ارسالی کاربر در: Archie file Send&Receive/Receive/ ذخیره شده‌اند.
-• هر فایل/گزارش/کد/نموداری که برای تحویل به کاربر ایجاد می‌کنید در: Archie file Send&Receive/Send/ ذخیره نمایید.
-• برای ارسال مستقیم فایل به تلگرام کاربر، از برچسب [SEND_FILE: <path>] در پاسخ استفاده کنید.)
---------------------------------------------------\n`;
-
-        const finalPrompt = promptText.includes('[TelGravity')
+        const finalPrompt = (promptText.includes('@skill:telgravity-file-bridge') || promptText.includes('[TelGravity'))
             ? promptText
-            : `${sessionBanner}${promptText}`;
+            : `@skill:telgravity-file-bridge\n${promptText}`;
 
         const ok = await AntigravityNativeService.sendPrompt(finalPrompt);
         logger.info(`[Bot] sendPrompt returned: ${ok}`);

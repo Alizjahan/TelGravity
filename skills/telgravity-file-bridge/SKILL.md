@@ -2,7 +2,7 @@
 name: telgravity-file-bridge
 description: >-
   Manages bidirectional file exchange and structured archiving between Telegram and Antigravity via TelGravity.
-  ACTIVATION RULE: Activates ONLY during Telegram remote sessions (when prompts contain TelGravity tags or Telegram context).
+  ACTIVATION RULE: Activates ONLY during Telegram remote sessions (when prompts contain '@skill:telgravity-file-bridge' or TelGravity tags).
   Automatically routes user-received files and generated deliverables (PDFs, images, charts, documents, code exports)
   into the structured 'Archie file Send&Receive/' hierarchy and tags them for instant Telegram delivery.
   Does NOT activate or interfere when the user works locally/directly in Antigravity on their computer.
@@ -14,7 +14,7 @@ description: >-
 
 > [!IMPORTANT]
 > **شرط فعال‌سازی مهارت (Activation Boundary):**
-> این مهارت **تنها و تنها زمانی فعال است** که تعامل کاربر از طریق **ربات تلگرام TelGravity** صورت گرفته باشد (وجود برچسب‌های `[TelGravity Telegram Remote Session]` یا پیام‌های ارسالی از تلگرام).
+> این مهارت **تنها و تنها زمانی فعال است** که تعامل کاربر از طریق **ربات تلگرام TelGravity** صورت گرفته باشد (وجود برچسب `@skill:telgravity-file-bridge` در پیام).
 > در استفاده عادی و محلی که کاربر مستقیماً پشت سیستم نشسته و با نرم‌افزار Antigravity گفتگو می‌کند، این مهارت غیرفعال بوده و فایل‌ها در ساختار عادی پروژه مدیریت می‌شوند.
 
 ---
