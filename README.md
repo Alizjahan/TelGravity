@@ -202,13 +202,12 @@ Archie file Send&Receive/
 
 ---
 
-## 👨‍💻 Developers & Maintainers
+## Maintainers
 
-Developed with ❤️ by:
-- **Aliz ([@Alizjahan](https://github.com/Alizjahan))**
+- **[@Alizjahan](https://github.com/Alizjahan)**
   - GitHub: [@Alizjahan](https://github.com/Alizjahan)
   - Telegram: [@Alizjahan](https://t.me/Alizjahan)
-- **Ehsan Shahbazi ([@EhsanShahbazii](https://github.com/EhsanShahbazii))**
+- **[@EhsanShahbazii](https://github.com/EhsanShahbazii)**
   - GitHub: [@EhsanShahbazii](https://github.com/EhsanShahbazii)
 
 ---
